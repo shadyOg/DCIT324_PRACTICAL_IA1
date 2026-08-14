@@ -1,20 +1,29 @@
 import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import AboutScreen from './screens/AboutScreen';
-import NewsListScreen from './screens/NewsListScreen';
-import NewsDetailScreen from './screens/NewsDetailsScreen';
-const Stack = createNativeStackNavigator();
+import NewsDetailsScreen from './screens/NewsDetailsScreen';
+
+const Tab = createBottomTabNavigator();
+const HomeStack = createNativeStackNavigator();
+
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
+      <HomeStack.Screen name="NewsDetails" component={NewsDetailsScreen} options={{ title: 'News Details' }} />
+    </HomeStack.Navigator>
+  );
+}
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
-        <Stack.Screen name="NewsList" component={NewsListScreen} options={{ title: 'News' }} />
-        <Stack.Screen name="NewsDetail" component={NewsDetailScreen} options={{ title: 'Article' }} />
-        <Stack.Screen name="About" component={AboutScreen} options={{ title: 'About' }} />
-      </Stack.Navigator>
+      <Tab.Navigator initialRouteName="HomeTab">
+        <Tab.Screen name="HomeTab" component={HomeStackScreen} options={{ title: 'Home' }} />
+        <Tab.Screen name="AboutTab" component={AboutScreen} options={{ title: 'About' }} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }

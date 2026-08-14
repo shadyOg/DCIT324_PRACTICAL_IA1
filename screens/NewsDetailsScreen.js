@@ -1,17 +1,20 @@
-import { ScrollView, View, Image, StyleSheet } from 'react-native';
+import { ScrollView, Image, StyleSheet } from 'react-native';
 import NewsTitle from '../components/NewsTitle';
 import NewsMeta from '../components/NewsMeta';
 import NewsContent from '../components/NewsContent';
 
-export default function NewsDetailScreen({ route }) {
-  const { item } = route.params;
+export default function NewsDetailsScreen({ route }) {
+  const { id, title, body } = route.params || {};
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {item.image ? <Image source={{ uri: item.image }} style={styles.image} /> : null}
-      <NewsTitle title={item.title} />
-      <NewsMeta author={item.author} date={item.date} source={item.source} />
-      <NewsContent content={item.content} />
+      <NewsTitle title={title || 'News details'} />
+      <NewsMeta
+        author={`Post ID: ${id ?? 'N/A'}`}
+        date="News Post"
+        source="JSONPlaceholder"
+      />
+      <NewsContent content={body || 'No article details are available.'} />
     </ScrollView>
   );
 }
